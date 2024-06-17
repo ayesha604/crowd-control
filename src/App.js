@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
-function App() {
+// import logo from './logo.svg';
+import React from 'react';
+import './App.css';
+import Navbar from './Navbar';
+import Button from '@mui/material/Button';
+
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <div className="content">
+        <h1>CrowdGuard</h1>
+        <p>application tagline</p>
+      </div>
     </div>
   );
 }
 
-export default App;
+// import React from 'react';
+// import { Container } from '@mui/material';
+// import LandingPage from './components/LandingPage';
+
+// const App = () => {
+//   return (
+//     <Container maxWidth={false} disableGutters>
+//       <LandingPage />
+//     </Container>
+//   );
+// };
+
+// export default App;

@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #343434;
+  min-height: 100vh;
+  color: #D59F39;
+  font-family: Arial, sans-serif;
 }
 
 .App-logo {
@@ -35,4 +42,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.content {
+  padding: 2rem;
+}
+
+.content p {
+  color: white; /* New color for the paragraph */
 }
