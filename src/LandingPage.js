@@ -5,14 +5,33 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import Navbar from './Navbar';
 
 function VideoUploadIcons({onClick}) {
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            console.log("File selected: ", file);
+            // sending file to backend would happen here
+        }
+    };
+
+    const handleUploadClick = () => {
+        document.getElementById('fileInput').click();
+    }
+
     return (
       <Stack direction="row">
         <IconButton sx={{color: "#D59F39"}} onClick={onClick}>
           <CameraAltIcon/>
         </IconButton>
-        <IconButton sx={{color: "#D59F39"}} onClick={onClick}>
+        <IconButton sx={{color: "#D59F39"}} onClick={handleUploadClick}>
           <DriveFolderUploadIcon/>
         </IconButton>
+        <input
+            type="file"
+            id="fileInput"
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+        />
       </Stack>
     )
   }
