@@ -7,30 +7,39 @@ import '@fontsource/roboto/700.css';
 import React from 'react';
 import './App.css';
 import Navbar from './Navbar';
-import Button from '@mui/material/Button';
+import { Box, Button, styled, Typography } from '@mui/material';
+import { Add, Settings } from '@mui/icons-material';
+
+const MyButton = styled(Button)({
+  backgroundColor:"#D59F39",
+  color:"#E6E6E6",
+  margin: 5,
+  "&:hover":{
+    backgroundColor:"#E6E6E6",
+    color:"#D59F39"
+  },
+});
 
 export default function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <div className="content">
+    <Box className="App" sx={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
+      <Navbar sx = {{display: 'flex'}}/>
+      <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          backgroundColor: '#343434',
+          color: 'white',
+          flex: 1
+        }}>
         <h1>CrowdGuard</h1>
         <p>application tagline</p>
-      </div>
-    </div>
+        {/* <Button variant="contained" sx = {{ */}
+        <MyButton>Upload Video</MyButton>
+      </Box>
+    </Box>
   );
 }
 
-// import React from 'react';
-// import { Container } from '@mui/material';
-// import LandingPage from './components/LandingPage';
-
-// const App = () => {
-//   return (
-//     <Container maxWidth={false} disableGutters>
-//       <LandingPage />
-//     </Container>
-//   );
-// };
-
-// export default App;
