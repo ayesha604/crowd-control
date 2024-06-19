@@ -8,6 +8,8 @@ import Navbar from './Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import CrowdStats from './CrowdStats';
+import Map from './Map';
+import CameraView from './CameraView';
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/crowd-stats" element={<CrowdStats />} />
+        <Route path="/map" element={<Map />} />
+        <Route path="/camera-view" element={<CameraView />} />
       </Routes>
     </Router>
   );
