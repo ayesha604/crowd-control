@@ -10,7 +10,7 @@ function VideoUploadIcons({onClick}) {
         const file = event.target.files[0];
         if (file) {
             console.log("File selected: ", file);
-            // sending file to backend would happen here
+            // sending video to backend would happen here
         }
     };
 
@@ -63,7 +63,7 @@ function VideoUploadIcons({onClick}) {
   
     return (
       <Box className="App" sx={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
-        <Navbar sx = {{display: 'flex'}}/>
+        {/* <Navbar sx = {{display: 'flex'}}/> */}
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',

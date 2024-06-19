@@ -7,15 +7,15 @@ import './App.css';
 import Navbar from './Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './LandingPage';
-import VideoDisplay from './VideoDisplay';
+import CrowdStats from './CrowdStats';
 
 export default function App() {
   return (
     <Router>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/video-display" element={<VideoDisplay />} />
+        <Route path="/crowd-stats" element={<CrowdStats />} />
       </Routes>
     </Router>
   );
