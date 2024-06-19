@@ -63,7 +63,6 @@ function VideoUploadIcons({onClick}) {
   
     return (
       <Box className="App" sx={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
-        {/* <Navbar sx = {{display: 'flex'}}/> */}
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
