@@ -1,7 +1,21 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import Navbar from './components/Navbar';
-import VideoUploadIcons from './components/VideoUploadIcons';
+import { Box, Typography, Button, IconButton, Stack, CircularProgress, Dialog, DialogContent, DialogActions, DialogTitle } from '@mui/material';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import { useNavigate } from 'react-router-dom';
+
+function VideoUploadIcons({ onUploadClick, onCameraClick }) {
+  return (
+    <Stack direction="row">
+      <IconButton sx={{ color: "#D59F39" }} onClick={onCameraClick}>
+        <CameraAltIcon />
+      </IconButton>
+      <IconButton sx={{ color: "#D59F39" }} onClick={onUploadClick}>
+        <DriveFolderUploadIcon />
+      </IconButton>
+    </Stack>
+  );
+}
 
 function MyButton({ onClick }) {
   return (
@@ -16,7 +30,7 @@ function MyButton({ onClick }) {
         }
       }}
     >
-      Upload Video
+      Upload Media
     </Button>
   );
 }
@@ -24,22 +38,36 @@ function MyButton({ onClick }) {
 export default function LandingPage() {
   const [showCamera, setShowCamera] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-
-  const toggleIcons = () => {
-    setShowCamera(!showCamera);
-  };
+  const [imageSrc, setImageSrc] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openWarningDialog, setOpenWarningDialog] = useState(false);
+  const [points, setPoints] = useState([]);
+  const navigate = useNavigate();
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log("File selected: ", file);
-      setIsProcessing(true);
-
-      // Simulate video processing
-      setTimeout(() => {
-        setIsProcessing(false);
-        console.log("File processed: ", file);
-      }, 3000);
+      const fileType = file.type;
+      if (fileType === 'image/jpeg' || fileType === 'image/png' || fileType === 'image/jpg') {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImageSrc(e.target.result);
+          setOpenDialog(true);
+        };
+        reader.readAsDataURL(file);
+      } else if (fileType === 'video/mp4' || fileType === 'video/avi' || fileType === 'video/mov') {
+        setIsProcessing(true);
+        // SEND VIDEO TO BACKEND
+        // Simulate video processing
+        setTimeout(() => {
+          setIsProcessing(false);
+          console.log("File processed: ", file);
+          navigate('/crowd-stats');
+        }, 3000);
+      } else {
+        // Unsupported file type
+        setOpenWarningDialog(true);
+      }
     }
   };
 
@@ -47,15 +75,41 @@ export default function LandingPage() {
     document.getElementById('fileInput').click();
   };
 
+  const toggleIcons = () => {
+    setShowCamera(!showCamera);
+  };
+
+  const handleImageClick = (event) => {
+    const rect = event.target.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    setPoints([...points, [x, y]]);
+    if (points.length === 1) {
+      // After selecting the second point, process the coordinates
+      setOpenDialog(false);
+      const numpyArray = JSON.stringify([points[0], [x, y]]); // For demonstration
+      console.log(numpyArray);  
+      // SEND THIS TO BACKEND
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setPoints([]);
+  };
+
+  const handleCloseWarningDialog = () => {
+    setOpenWarningDialog(false);
+  };
+
   return (
-    <Box className="App" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box className="App" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#343434' }}>
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        backgroundColor: '#343434',
         color: 'white',
         flex: 1
       }}>
@@ -76,16 +130,42 @@ export default function LandingPage() {
             color: 'white',
             margin: 2
           }}>application tagline</Typography>
-        {showCamera ? (
-          <VideoUploadIcons
-            isProcessing={isProcessing}
-            onClick={handleUploadClick}
-            onFileChange={handleFileChange}
-          />
+        {isProcessing ? (
+          <CircularProgress sx={{ color: "#D59F39" }} />
         ) : (
-          <MyButton onClick={toggleIcons}>Upload Video</MyButton>
+          showCamera ? (
+            <>
+              <VideoUploadIcons onUploadClick={handleUploadClick} />
+              <input
+                type="file"
+                id="fileInput"
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+              />
+            </>
+          ) : (
+            <MyButton onClick={toggleIcons}>Upload Video</MyButton>
+          )
         )}
       </Box>
+
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogContent>
+          {imageSrc && (
+            <img src={imageSrc} alt="Uploaded" style={{ maxWidth: '100%' }} onClick={handleImageClick} />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={openWarningDialog} onClose={handleCloseWarningDialog}>
+        <DialogTitle>Unsupported File Type</DialogTitle>
+        <DialogContent>
+          <Typography>Please upload a valid video (.mp4, .avi, .mov) or image (.jpg, .jpeg, .png) file.</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseWarningDialog}>OK</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
