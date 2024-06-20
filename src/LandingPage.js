@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Button, IconButton, Stack } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
-import Navbar from './Navbar';
+import Navbar from './components/Navbar';
 
 function VideoUploadIcons({onClick}) {
 
