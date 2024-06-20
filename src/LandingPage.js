@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, IconButton, Stack } from '@mui/material';
+import { Box, Typography, Button, IconButton, Stack, CircularProgress } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import Navbar from './components/Navbar';
 
 function VideoUploadIcons({onClick}) {
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
             console.log("File selected: ", file);
             // sending video to backend would happen here
+            setIsProcessing(true);
+            
+            // temporary video processing simulation
+            setTimeout(() => {
+              setIsProcessing(false);
+              console.log("File processed: ", file);
+            }, 3000);
         }
     };
 
@@ -32,6 +41,7 @@ function VideoUploadIcons({onClick}) {
             style={{ display: 'none' }}
             onChange={handleFileChange}
         />
+        {isProcessing && <CircularProgress sx={{ color: "#D59F39" }} />}
       </Stack>
     )
   }
