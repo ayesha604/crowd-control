@@ -83,11 +83,18 @@ export default function LandingPage() {
     const rect = event.target.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    setPoints([...points, [x, y]]);
-    if (points.length === 1) {
-      // After selecting the second point, process the coordinates
+    const newPoints = [...points, [x, y]];
+    setPoints(newPoints);
+    if (newPoints.length === 2) {
+      // After selecting the second point, process the remaining two coordinates
+      const [point1, point2] = newPoints;
+      const topLeft = [Math.min(point1[0], point2[0]), Math.min(point1[1], point2[1])];
+      const bottomRight = [Math.max(point1[0], point2[0]), Math.max(point1[1], point2[1])];
+      const topRight = [bottomRight[0], topLeft[1]];
+      const bottomLeft = [topLeft[0], bottomRight[1]];
+
       setOpenDialog(false);
-      const numpyArray = JSON.stringify([points[0], [x, y]]); // For demonstration
+      const numpyArray = JSON.stringify([topRight, bottomLeft, bottomRight, topLeft]); 
       console.log(numpyArray);  
       // SEND THIS TO BACKEND
     }
@@ -125,11 +132,11 @@ export default function LandingPage() {
           noWrap
           sx={{
             display: 'flex',
-            fontFamily: 'Roboto',
-            fontWeight: 300,
+            fontFamily: 'Roboto Mono',
+            fontWeight: 400,
             color: 'white',
             margin: 2
-          }}>application tagline</Typography>
+          }}>Your dedicated community guard</Typography>
         {isProcessing ? (
           <CircularProgress sx={{ color: "#D59F39" }} />
         ) : (
@@ -144,7 +151,7 @@ export default function LandingPage() {
               />
             </>
           ) : (
-            <MyButton onClick={toggleIcons}>Upload Video</MyButton>
+            <MyButton onClick={toggleIcons}>Upload Media</MyButton>
           )
         )}
       </Box>

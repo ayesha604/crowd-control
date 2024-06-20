@@ -5,16 +5,17 @@ export default function CrowdStats() {
     return (
       <Box className="App" sx={{minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         
-        <Stack direction="row" spacing={15} sx={{ alignItems: 'center'}}>
+        <Stack direction="row" spacing={10} sx={{ alignItems: 'center'}}>
             <Box
                 sx={{
                     backgroundColor: 'grey',
-                    height: '60vh',
-                    width: '45vw',
+                    height: '55vh',
+                    width: '55vw',
                     borderRadius: 2,
                   }}>
             </Box>
             <Stack direction="column" spacing={2}>
+                <Typography sx={{fontFamily: 'Roboto Mono'}}>Disaster Risk</Typography>
                 <Box 
                     sx={{ 
                         backgroundColor: 'grey', 
@@ -26,10 +27,9 @@ export default function CrowdStats() {
                         borderRadius: 5,
                         border: '2px solid #D59F39', 
                     }}
-                >
-                    <Typography>Disaster Probability</Typography>
+                >   
                 </Box>
-                <Stack direction="row" spacing={2}>
+                {/* <Stack direction="row" spacing={2}>
                     <Box 
                         sx={{ 
                             backgroundColor: 'grey', 
@@ -58,7 +58,7 @@ export default function CrowdStats() {
                     >
                         <Typography>Crowd Density</Typography>
                     </Box>
-                </Stack>
+                </Stack> */}
             </Stack>
         </Stack>
       </Box>
