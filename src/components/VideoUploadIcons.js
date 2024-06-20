@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { IconButton, Stack, CircularProgress } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import { useNavigate } from 'react-router-dom';
 
-export default function VideoUploadIcons({ isProcessing, onClick, onFileChange }) {
+function VideoUploadIcons({ isProcessing, onClick, onFileChange }) {
   return (
     <Stack direction="row">
       {isProcessing ? (
@@ -27,3 +28,5 @@ export default function VideoUploadIcons({ isProcessing, onClick, onFileChange }
     </Stack>
   );
 }
+
+export default VideoUploadIcons;
